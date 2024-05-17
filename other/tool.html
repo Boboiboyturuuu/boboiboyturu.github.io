@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Beranda</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="tool.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Tools </h1>
+    </div>
+    <div class="menu-container">
+    <div class="menu">       
+        <button onclick="showMenu('menu1')">Insta</button>
+        <button onclick="showMenu('menu2')">Tiktok</button>
+        <button onclick="showMenu('menu3')">IgStalk</button>
+        <button onclick="showMenu('menu4')">Pintetest</button>
+        <button onclick="showMenu('menu5')">YouTube</button>
+        <button onclick="showMenu('menu6')">Facebook</button>
+    </div>
+    </div>
+<div class="content" id="beranda">
+    <h2>Halaman Beranda</h2>
+    <p>Selamat datang di halaman beranda.</p>
+</div>
+<div id="menu1" class="menu-page">    
+<div class="insta-tools">
+        <div class="box">
+          <span>Instagram Downloader</span>
+            <input type="text" id="insta-url" placeholder="Tempel tautan Instagram disini">
+          <button onclick="pasteLink()"><i class="material-icons">content_paste</i></button>
+          <button onclick="downloadMedia()"><i class="material-icons">cloud_download</i> </button>
+          </div>
+<div id="media-container" class="media-container"></div>
+    </div>
+</div>
+
+ <div id="menu2" class="menu-page">
+      <div class="tiktok-tools">
+        <div class="box">
+          <span>TikTok Downloader</span>
+           <input type="text" id="tiktok-url" placeholder="Tempel tautan TikTok disini">
+         <button onclick="pasteLink()"><i class="material-icons">content_paste</i></button>
+         <button onclick="downloadTiktok()"><i class="material-icons">cloud_download</i></button>
+  </div>
+  <div id="tiktok-container" class="tiktok-container"></div>
+</div>
+    </div>
+    
+    <div id="menu3" class="menu-page">
+      <div class="igstalk">
+        <span>Stalking Instagram</span>
+  <div class="search-container">
+    <input type="text" id="username-input" placeholder="Masukkan username Instagram">
+   <button onclick="searchInstagram()">
+  <i class="fas fa-search"></i> Search
+</button>
+  </div>
+  <div id="result-container" class="result-container"></div>
+</div>
+    </div>
+    <div id="menu4" class="menu-page">
+      <div class="pinterest-tools">
+  <div class="box">
+    <span>Pinterest Downloader</span>
+    <input type="text" id="pinterest-url" placeholder="Tempel tautan Pinterest disini">
+        <button onclick="pasteLink()"><i class="material-icons">content_paste</i></button>
+    <button onclick="downloadPinterestMedia()"><i class="material-icons">cloud_download</i></button>
+  </div>
+  <div id="pinterest-container" class="pinterest-container"></div>
+</div>
+
+    </div>
+ <div id="menu5" class="menu-page">
+      <div class="ytdownload">
+  <div class="box">
+    <span>Youtube Downloader</span>
+    <input type="text" id="youtube-url" placeholder="Tempel tautan TikTok disini">
+    <button onclick="pasteLink()"><i class="material-icons">content_paste</i></button>
+    <button onclick="ytdownload()"><i class="material-icons">cloud_download</i></button>
+  </div>
+  <div id="ytube-container" class="ytube-container"></div>
+</div>
+    </div>
+   <button class="close-all" onclick="closeAllMenus()">
+            <i class="fas fa-arrow-left"></i>
+<div id="custom-alert" class="custom-alert hidden">
+    <span class="material-icons alert-icon">warning</span>
+    <span id="alert-message"></span>
+</div>
+        <div class="loading-container" id="loadingContainer">
+ <div class="loading"></div>
+       <div class="loading-text">Loading</div>
+</div>
+</button>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        showMenu('beranda');
+    });
+
+function showMenu(menuId) {
+        var allPages = document.querySelectorAll('.menu-page, .content');
+        allPages.forEach(function(page) {
+            page.classList.remove('active');
+        });
+        var selectedMenu = document.getElementById(menuId);
+        selectedMenu.classList.add('active');
+    }   
+    function closeAllMenus() {
+        var allPages = document.querySelectorAll('.menu-page, .content');
+        allPages.forEach(function(page) {
+            page.classList.remove('active');
+        });
+        var homePage = document.querySelector('.content');
+        homePage.classList.add('active');
+    }
+    //Function auto Tempel link
+       async function pasteLink() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('insta-url').value = text;
+            } catch (err) {
+                console.error('Failed to read clipboard contents: ', err);
+            }
+        }
+        //Function Instagram 
+        async function downloadMedia() {
+  const urlInput = document.getElementById('insta-url').value;
+if (!urlInput) {
+    showCustomAlert('Masukan URL');
+    return;
+  }
+  if (urlInput.toLowerCase().indexOf('instagram.com') === -1) {
+    showCustomAlert('Masukan URL instagram yang valid');
+    return;
+  }
+  const apiUrl = `https://instagram-post-downloader.p.rapidapi.com/?url=${encodeURIComponent(urlInput)}`;
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': 'e1e2b929f6msh0319169b4ed4badp1cb782jsn6286baff06b4',
+      'X-RapidAPI-Host': 'instagram-post-downloader.p.rapidapi.com'
+    }
+  };
+
+  // Tampilkan animasi loading
+  const loadingContainer = document.getElementById('loadingContainer');
+  loadingContainer.style.display = 'block';
+  try {
+    const response = await fetch(apiUrl, options);
+    const result = await response.json();
+    if (result.status === 'success') {
+      const mediaContainer = document.getElementById('media-container');
+      mediaContainer.innerHTML = '';
+
+      result.data.forEach(item => {
+        const mediaItem = document.createElement('div');
+        mediaItem.classList.add('media-item');
+
+        const thumbnail = document.createElement('img');
+        thumbnail.src = item.thumbnail;
+        mediaItem.appendChild(thumbnail);
+
+        const downloadLink = document.createElement('a');
+        downloadLink.classList.add('download-link');
+        downloadLink.href = item.download;
+        downloadLink.innerHTML = '<i class="material-icons">cloud_download</i> Download';
+        mediaItem.appendChild(downloadLink);
+
+        mediaContainer.appendChild(mediaItem);
+      });
+      document.getElementById('insta-url').value = '';
+    } else {
+      console.error('Failed to retrieve media:', result);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  } finally {
+    // Sembunyikan animasi loading setelah proses selesai
+    loadingContainer.style.display = 'none';
+  }
+}
+
+//downl9ad tiktok
+async function downloadTiktok() {
+  const urlInput = document.getElementById('tiktok-url').value;
+  if (!urlInput) {
+    showCustomAlert('Masukan URL');
+    return;
+  }
+  if (urlInput.toLowerCase().indexOf('tiktok.com') === -1) {
+    showCustomAlert('Masukan URL TikTok yang valid');
+    return;
+  }
+
+  const apiUrl = `https://tiktok-video-no-watermark2.p.rapidapi.com/?url=${encodeURIComponent(urlInput)}&hd=1`;
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': 'e1e2b929f6msh0319169b4ed4badp1cb782jsn6286baff06b4',
+      'X-RapidAPI-Host': 'tiktok-video-no-watermark2.p.rapidapi.com'
+    }
+  };
+
+  // Tampilkan animasi loading
+  const loadingContainer = document.getElementById('loadingContainer');
+  loadingContainer.style.display = 'block';
+
+  try {
+    const response = await fetch(apiUrl, options);
+    const result = await response.json();
+    const tikContainer = document.getElementById('tiktok-container');
+    tikContainer.innerHTML = ''; 
+    const tiktok = document.createElement('div');
+	tiktok.innerHTML = `
+	  <h3>You Result</h3>
+ <video controls>
+  <source src="${result.data.play || 'Ada Kesalahan'}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<button class="download-button" onclick="downloadVideo()">
+    <i class="cloud_download"></i> Unduh Video
+  </button>
+
+	    <p>Author: ${result.data.author.nickname || 'Tidak Ada'}</p>
+	  <p>Title: ${result.data.title || 'Tidak Ada'}</p>
+	 <p>Views: ${result.data.play_count || 'Tidak Ada'}</p>
+	  <p>Likes: ${result.data.digg_count || 'Tidak Ada'}</p>
+	   <p>Jumlah Komentar: ${result.data.comment_count || 'Tidak Ada'}</p>
+	`;
+	tikContainer.appendChild(tiktok);
+    document.getElementById('tiktok-url').value = '';
+  } catch (error) {
+    console.error('Error:', error);
+  } finally {
+    // Sembunyikan animasi loading setelah proses selesai
+    loadingContainer.style.display = 'none';
+  }
+}
+
+async function searchInstagram() {
+  const username = document.getElementById('username-input').value;
+  if (!username) {
+    showCustomAlert('Masukkan username Instagram');
+    return;
+  }
+
+  const apiUrl = `https://instagram-scraper-api2.p.rapidapi.com/v1/info?username_or_id_or_url=${username}`;
+  const options = {
+    method: 'GET',
+    headers: {
+		'X-RapidAPI-Key': 'e1e2b929f6msh0319169b4ed4badp1cb782jsn6286baff06b4',
+		'X-RapidAPI-Host': 'instagram-scraper-api2.p.rapidapi.com'
+	}
+    
+  };
+
+  // Tampilkan animasi loading
+  const loadingContainer = document.getElementById('loadingContainer');
+  loadingContainer.style.display = 'block';
+
+  try {
+    const response = await fetch(apiUrl, options);
+    const result = await response.json();
+    const resultContainer = document.getElementById('result-container');
+    resultContainer.innerHTML = ''; 
+    const profileInfo = document.createElement('div');
+	profileInfo.innerHTML = `
+	  <h3>Informasi Profil</h3>
+	   <img src="${result.data.profile_pic_url_hd || 'Foto Error'}">
+	  <p>Username: ${result.data.username || 'Tidak Ada'}</p>
+	  <p>Full Name: ${result.data.full_name || 'Tidak Ada'}</p>
+	  <p>Bio: ${result.data.biography || 'Tidak Ada'}</p>
+	  <p>Jumlah Posting: ${result.data.media_count || 'Tidak Ada'}</p>
+	  <p>Jumlah Pengikut: ${result.data.follower_count || 'Tidak Ada'}</p>
+	   <p>Jumlah Di Ikuti: ${result.data.following_count || 'Tidak Ada'}</p>
+	  <p>Kategori: ${result.data.category || 'Tidak Ada'}</p>
+	  <p>Nomor Telepon: ${result.data.contact_phone_number || 'Tidak Ada'}</p>
+	  <p>Email: ${result.data.public_email || 'Tidak Ada'}</p>
+	  <p>Tipe Akun: ${result.data.account_type || 'Tidak Ada'}</p>
+	  <p>Alamat Situs Eksternal: ${result.data.external_url || 'Tidak Ada'}</p>
+	`;
+	resultContainer.appendChild(profileInfo);
+    
+
+    document.getElementById('username-input').value = '';
+  } catch (error) {
+    console.error('Error:', error);
+  } finally {
+    // Sembunyikan animasi loading setelah proses selesai
+    loadingContainer.style.display = 'none';
+  }
+}
+async function downloadPinterestMedia() {
+  const pinterestUrl = document.getElementById('pinterest-url').value;
+  if (!pinterestUrl) {
+    showCustomAlert('Masukkan tautan Pinterest');
+    return;
+  }
+
+  const apiUrl = 'https://pinterest-video-image-gif-downloader.p.rapidapi.com/downloader';
+  const options = {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+      'X-RapidAPI-Key': 'e1e2b929f6msh0319169b4ed4badp1cb782jsn6286baff06b4',
+      'X-RapidAPI-Host': 'pinterest-video-image-gif-downloader.p.rapidapi.com'
+    },
+    body: new URLSearchParams({
+      link: pinterestUrl,
+      type: 'public',
+      web: 'pinterest'
+    })
+  };
+
+  // Tampilkan animasi loading
+  const loadingContainer = document.getElementById('loadingContainer');
+  loadingContainer.style.display = 'block';
+
+  try {
+    const response = await fetch(apiUrl, options);
+    const result = await response.json();
+    console.log(result); // Hasil respons dari API
+
+    // Bersihkan kolom tautan
+    document.getElementById('pinterest-url').value = '';
+
+    // Ambil media dari respons
+    const media = result.media[0];
+
+    // Bersihkan kontainer hasil media sebelumnya
+    const pinterestContainer = document.getElementById('pinterest-container');
+    pinterestContainer.innerHTML = '';
+    media.images.forEach(imageUrl => {
+      const imageElement = document.createElement('img');
+      imageElement.src = imageUrl;
+      pinterestContainer.appendChild(imageElement);
+      const downloadButton = document.createElement('a');
+      downloadButton.href = imageUrl;
+      downloadButton.download = 'image.jpg';
+      downloadButton.textContent = 'Download Gambar';
+      pinterestContainer.appendChild(downloadButton);
+    });
+    media.videos.forEach(videoUrl => {
+      const videoElement = document.createElement('video');
+      videoElement.controls = true;
+      const sourceElement = document.createElement('source');
+      sourceElement.src = videoUrl;
+      videoElement.appendChild(sourceElement);
+      pinterestContainer.appendChild(videoElement);
+
+      const downloadButton = document.createElement('a');
+      downloadButton.href = videoUrl;
+      downloadButton.download = 'video.mp4';
+      downloadButton.textContent = 'Download Video';
+      pinterestContainer.appendChild(downloadButton);
+    });
+  } catch (error) {
+    console.error('Error:', error);
+  } finally {
+    // Sembunyikan animasi loading setelah proses selesai
+    loadingContainer.style.display = 'none';
+  }
+}
+
+async function ytdownload() {
+  const urlInput = document.getElementById('youtube-url').value;
+  if (!urlInput) {
+    showCustomAlert('Masukan URL');
+    return;
+  }
+  if (urlInput.toLowerCase().indexOf('youtube.com') === -1) {
+    showCustomAlert('Masukan URL YouTube yang valid');
+    return;
+  }
+
+  const apiUrl = `https://youtube-video-and-shorts-downloader.p.rapidapi.com/?url=${encodeURIComponent(urlInput)}`;
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': 'e1e2b929f6msh0319169b4ed4badp1cb782jsn6286baff06b4',
+      'X-RapidAPI-Host': 'youtube-video-and-shorts-downloader.p.rapidapi.com'
+    }
+  };
+
+  // Tampilkan animasi loading
+  const loadingContainer = document.getElementById('loadingContainer');
+  loadingContainer.style.display = 'block';
+
+  try {
+    const response = await fetch(apiUrl, options);
+    const result = await response.json();
+    const resultContainer = document.getElementById('ytube-container');
+    resultContainer.innerHTML = ''; 
+    const yutub = document.createElement('div');
+	yutub.innerHTML = `
+	  <h3>Hasil Tautan</h3>
+ <video controls>
+  <source src="${result.data.video_with_audio[0]?.url || 'Foto Error'}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<button class="download-button" onclick="downloadVideo()">
+  <i class="fas fa-download"></i> Unduh Video
+</button>
+	   <img src="${result.data.video_info.thumbnail.thumbnails[0]?.url || 'Foto Error'}">
+	    <p>Author: ${result.data.video_info.author || 'Tidak Ada'}</p>
+	  <p>Id Video: ${result.data.video_info.videoId || 'Tidak Ada'}</p>
+	  <p>Title: ${result.data.video_info.title || 'Tidak Ada'}</p>
+	 <p>Id Channel: ${result.data.video_info.channelId || 'Tidak Ada'}</p>
+<p>Viewers: ${result.data.video_info.viewCount || 'Tidak Ada'}
+	  <p id="keywords">Keywords: ${result.data.video_info.keywords.length > 200 ? result.data.video_info.keywords.substring(0, 200) + '<span id="keywordsReadMore" onclick="toggleReadMore(\'keywordsReadMore\')">... Baca Selengkapnya</span>' : result.data.video_info.keywords || 'Tidak Ada'}</p>
+	  <p id="description">Description: ${result.data.video_info.shortDescription.length > 200 ? result.data.video_info.shortDescription.substring(0, 200) + '<span id="descriptionReadMore" onclick="toggleReadMore(\'descriptionReadMore\')">... Baca Selengkapnya</span>' : result.data.video_info.shortDescription || 'Tidak Ada'}</p>
+
+	`;
+	resultContainer.appendChild(yutub);
+    document.getElementById('youtube-url').value = '';
+} catch (error) {
+    console.error('Error:', error);
+  } finally {
+    // Sembunyikan animasi loading setelah proses selesai
+    loadingContainer.style.display = 'none';
+  }
+}
+function toggleReadMore(elementId) {
+  var element = document.getElementById(elementId);
+  if (element.style.maxHeight) {
+    element.style.maxHeight = null;
+  } else {
+    element.style.maxHeight = element.scrollHeight + "px";
+  }
+}
+
+//Fungsi Download 
+function downloadVideo() {
+    var videoUrl = result.data.play || '';
+    var fileName = "nama_video.mp4";
+
+    var anchor = document.createElement('a');
+    anchor.href = videoUrl;
+    anchor.download = fileName;
+
+    anchor.click();
+}
+
+
+//bagiak pesan invalid
+    function showCustomAlert(message) {
+  const alertBox = document.getElementById('custom-alert');
+  const alertMessage = document.getElementById('alert-message');
+  alertMessage.textContent = message;
+  alertBox.classList.remove('hidden');
+  alertBox.classList.add('show');
+
+  setTimeout(() => {
+    alertBox.classList.remove('show');
+    alertBox.classList.add('hidden');
+  }, 3000);
+}
+</script>
+   
+</body>
+</html>
