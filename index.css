@@ -1,0 +1,621 @@
+ @font-face {
+    font-family: 'CHLORINR';
+    src: url('./fonts/CHLORINR.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'advanced_led_board-7';
+    src: url('./fonts/advanced_led_board-7.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'NORTHDUSTIC';
+    src: url('./fonts/NORTHDUSTIC.ttf') format('truetype');
+}
+body {
+  overflow-y: auto;
+  font-size: 20px;
+    margin: 0;
+    height: 100vh;
+    background-image: url('https://i.pinimg.com/originals/73/33/15/73331523eb46efa286b6fd44ba5da084.jpg');
+    background-position: center;
+    background-size: cover;
+    
+}
+
+.blur-background {
+    width: 80%;
+    height: 80%;
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+.container {
+  font-family: 'NORTHDUSTIC', sans-serif;
+    max-width: 800px;
+    margin: 10px 10px;
+    
+    padding: 20px;
+    background-image: url('https://i.pinimg.com/originals/e3/47/ac/e347ac7e596bb2bf20f549902c1cf5e6.gif');
+    border-radius: 10px;
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.profile {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.profile img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #e9e9e9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.profile img:hover {
+    transform: scale(1.1) translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.profile h2 {
+    margin: 10px 0 5px;
+    color: #ffffff;
+    font-size: 25px;
+}
+
+.profile p {
+    color: #ffffff;
+    font-size: 20px;
+}
+.profile q {
+    margin: 5px 0 0;
+    color: #ffffff;
+}
+
+.socialmedia {
+    text-align: center;
+}
+
+.socialmedia a {
+    margin: 0 10px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 35px;
+    transition: color 0.3s;
+}
+
+.socialmedia a:hover {
+    color: #007bff;
+}
+.info {
+    font-family: 'NORTHDUSTIC', sans-serif;
+    background: #696969; /* Warna latar belakang info */
+    color: #ffffff;
+    position: relative;
+    text-shadow: 2px 2px 4px #000000;
+    border-radius: 25px;
+    width: 270px;
+    font-size: 20px;
+    height: 280px;
+    left: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    text-transform: capitalize;
+    border: 2px solid #333;
+    padding: 20px; /* Menambahkan padding yang lebih besar */
+    display: inline-block;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Mengatur efek bayangan */
+    text-shadow: 
+        -1px -1px 0 #000,  
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
+p {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+span {
+    font-family: 'advanced_led_board-7', sans-serif;
+    color: rgb(255,54,54);
+}
+.advertisement-container {
+    position: relative;
+    overflow: hidden;
+    width: 450px;
+    height: 50px;
+    background: linear-gradient(45deg, #ff7e5f, #feb47b); /* Gradien warna yang lebih cerah */
+    padding: 10px;
+    left: 18px;
+    border-radius: 20px; /* Lebih membulatkan sudut */
+    margin-bottom: 20px; /* Jarak antara iklan */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Bayangan yang lebih menonjol */
+    transition: all 0.3s ease;
+    
+}
+
+.advertisement-container:hover {
+    transform: translateY(-5px); /* Mendorong sedikit ke atas saat dihover */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Bayangan lebih tebal */
+}
+
+
+/* CSS untuk animasi pesan */
+.advertisement-message {
+    position: absolute;
+    right: -100%; /* Mulai dari kiri */
+    top: 50%; /* Posisi vertikal tengah */
+    transform: translateY(-50%);
+    white-space: nowrap;
+    font-size: 25px; /* Ukuran font pesan */
+    padding: 8px 12px; /* Padding pesan */
+    color: #fff; /* Warna teks pesan */
+    border-radius: 20px; /* Sudut bulat pesan */
+    animation: moveLeft 5s linear infinite; /* Animasi pesan bergerak ke kanan */
+   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Keyframe untuk animasi */
+@keyframes moveLeft {
+    to {
+        right: 100%; /* Pesan bergerak ke kanan hingga keluar dari kolom iklan */
+    }
+}
+  .phone {
+    position: relative;
+    width: 300px;
+    height: 600px;
+    bottom: 90px;
+    left: 10px;
+    background-color: #000;
+    border: 20px solid #333;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+
+  .screen {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 70px; /* adjusted for button */
+    background-color: #fff;
+    border-radius: 30px;
+    overflow: hidden;
+  }
+
+  .content {
+    padding: 20px;
+    box-sizing: border-box;
+    height: 100%;
+    overflow-y: scroll;
+  }
+
+  /* Backhover effect */
+  .phone:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: perspective(50px) rotateX(20deg);
+    pointer-events: none;
+    z-index: -1;
+    transition: transform 0.5s ease;
+  }
+
+  .phone:hover:before {
+    transform: perspective(50px) rotateX(0deg);
+  }
+
+  /* Button */
+.button {
+  position: absolute;
+  bottom: 20px;
+  padding: 10px 20px;
+  right: 120px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #555;
+}
+.button2 {
+  position: absolute;
+  bottom: 20px;
+  padding: 10px 20px;
+  right: 220px; /* Menggeser tombol 2 ke kanan */
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button3 {
+  position: absolute;
+  bottom: 20px;
+  padding: 10px 20px;
+  right: 20px; /* Menggeser tombol 3 ke kanan */
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button2:hover,
+.button3:hover {
+  background-color: #555;
+}
+  /* Style untuk kotak konten */
+.content-item {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style untuk gambar */
+.content-item img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Style untuk judul */
+.content-item h2 {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+/* Style untuk ikon sosial media */
+.social-icon {
+  font-size: 20px;
+  margin-right: 10px;
+}
+.spinner {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner .spinner-icon {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.form-container {
+            background-color: #ffffff;
+            display: none;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 400px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+     
+.form-group {
+            margin-bottom: 10px;
+        }
+.form-group label {
+            display: block;
+            font-weight: bold;
+        }
+.form-group input[type="text"],
+.form-group textarea {
+            width: 100%;
+            padding: 5px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+.form-group input[type="file"] {
+            margin-top: 5px;
+        }
+.form-group textarea {
+            height: 100px;
+        }
+.form-group input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 12px 24px; /* Lebih besar untuk meningkatkan keterbacaan */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px; /* Ukuran font yang sedikit lebih besar */
+    border-radius: 8px; /* Sudut yang lebih melengkung */
+    cursor: pointer;
+    transition: background-color 0.3s; /* Efek transisi saat hover */
+}
+
+/* Efek hover */
+.form-group input[type="submit"]:hover {
+    background-color: #43faff; /* Warna sedikit lebih gelap saat hover */
+}
+.overlay {
+ position: relative;
+ top: 0;
+ left: 0;
+width: 100%;
+ height: 100%;
+ background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998;
+ display: none;
+       }
+.rahasia {
+    position: relative;
+    bottom: 250px; /* Ubah posisi ke bagian bawah */
+    left: 19px;
+    background-image: url('https://telegra.ph/file/d758345d03ef0d74ae878.jpg');
+    background-size: cover;
+    background-position: 15px 0;
+    color: black;
+    border: none;
+    border-radius: 10px;
+    padding: 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.rahasia:hover {
+    background-color: #43faff;
+}
+
+.rahasia i {
+    margin-bottom: 5px; /* Menambahkan sedikit ruang antara ikon dan teks */
+}
+
+.rahasia p {
+    margin: 0;
+}
+ .button-tools {
+  position: relative;
+  bottom: 120px; /* Ubah posisi ke bagian bawah */
+  left: 330px;
+  background-image: url('https://i.pinimg.com/originals/dc/3e/cd/dc3ecdab0fa15f3bd29d1e20718648e6.gif');
+  background-size: cover;
+  background-position: 15px 0;
+  color: black; /* Warna font putih */
+  text-shadow: 2px 2px 4px white;
+  border: none;
+  border-radius: 10px;
+  width: 120px;
+  padding: 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.button-soon {
+  position: relative;
+  bottom: 230px; /* Ubah posisi ke bagian bawah */
+  left: 158px;
+  width: 118px;
+  background-image: url('https://i.pinimg.com/originals/8e/87/56/8e87565d2b85406ddeaa4ac95b36a497.gif');
+  background-size: cover;
+  background-position: 15px 0;
+  color: black; /* Warna font putih */
+  text-shadow: 2px 2px 4px white;
+  border: none;
+  border-radius: 10px;
+  padding: 25px;
+  font-family: bold;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+
+
+
+
+/*Desktop mode*/
+@media only screen and (min-width: 768px) {
+    body {
+        padding: 50px;
+        background-image: url('https://i.pinimg.com/originals/f3/ef/1d/f3ef1d35037ab5021a7e0ec75aae19fe.gif');
+    }
+ .container {
+  font-family: 'NORTHDUSTIC', sans-serif;
+    max-width: 800px;
+    margin: 5px center;
+    padding: 20px;
+    background-image: url('https://i.pinimg.com/originals/e3/47/ac/e347ac7e596bb2bf20f549902c1cf5e6.gif');
+    border-radius: 20px;
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+.info {
+    font-family: 'NORTHDUSTIC', sans-serif;
+    background: #696969; 
+    color: #ffffff;
+    position: relative;
+    text-shadow: 2px 2px 4px #000000;
+    border-radius: 25px;
+    width: 270px;
+    font-size: 20px;
+    height: 280px;
+    left: 370px;
+    bottom: 0;
+    top: 20px;
+    font-size: 20px;
+    text-transform: capitalize;
+    border: 2px solid #333;
+    padding: 20px;
+    display: inline-block;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); 
+    text-shadow: 
+        -1px -1px 0 #000,  
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+}
+.advertisement-container {
+    position: relative;
+    overflow: hidden;
+    width: 800px;
+    height: 50px;
+    background: linear-gradient(45deg, #ff7e5f, #feb47b); 
+    padding: 10px;
+    left: 18px;
+    border-radius: 20px; 
+    margin-bottom: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    
+}
+ .button-tools {
+   position: absolute;
+    top: 1000px; 
+    left: 420px;
+    background-image: url('https://i.pinimg.com/originals/dc/3e/cd/dc3ecdab0fa15f3bd29d1e20718648e6.gif');
+    background-size: cover;
+    background-position: 15px 0;
+    color: black;
+    border: none;
+    width: 255px;
+    border-radius: 10px;
+    height: 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+ .button-soon {
+   position: absolute;
+    top: 1105px; 
+    left: 420px;
+    background-image: url('https://i.pinimg.com/originals/8e/87/56/8e87565d2b85406ddeaa4ac95b36a497.gif');
+    background-size: cover;
+    background-position: 15px 0;
+    color: black;
+    border: none;
+    width: 255px;
+    border-radius: 10px;
+    height: 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+  
+
+
+.rahasia {
+    position: absolute;
+    top: 890px; 
+    left: 420px;
+    background-image: url('https://telegra.ph/file/d758345d03ef0d74ae878.jpg');
+    background-size: cover;
+    background-position: 15px 0;
+    color: black;
+    border: none;
+    width: 300px;
+    border-radius: 10px;
+    height: 100px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.rahasia:hover {
+    background-color: #43faff;
+}
+
+.rahasia i {
+    margin-bottom: 5px;
+}
+
+.rahasia p {
+    margin: 0;
+}
+
+.phone {
+    position: relative;
+    width: 300px;
+    height: 600px;
+    bottom: 300px;
+    left: 10px;
+    background-color: #000;
+    border: 20px solid #333;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+  }
+.form-container {
+            background-color: #ffffff;
+            display: none;
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 50px;
+            width: 600px;
+            position: fixed;
+            top: 400px;
+            left: 1300px;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+}
