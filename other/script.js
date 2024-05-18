@@ -56,17 +56,23 @@ async function loadData() {
 
 // Panggil fungsi loadData saat halaman dimuat
 document.addEventListener('DOMContentLoaded', loadData);
-var likeCounts = {};
+async function increaseLike(photoId, currentLikeCount) {
+            try {
+                const newLikeCount = currentLikeCount + 1;
+                const likeCountElement = document.getElementById('like-value-' + photoId);
+                likeCountElement.innerHTML = '<i class="fas fa-eye"></i> ' + newLikeCount;
+                const button = document.getElementById('likeButton-' + photoId);
+                button.style.color = 'blue';
 
-function increaseLike(photoId) {
-  var currentLikeCount = likeCounts[photoId] || 0;
-  var newLikeCount = currentLikeCount + 1;
-  likeCounts[photoId] = newLikeCount;
-  var likeCountElement = document.getElementById('like-value-' + photoId);
-  likeCountElement.innerHTML = '<i class="fas fa-eye"></i> ' + newLikeCount;
-  var button = document.getElementById('likeButton-' + photoId);
-  button.style.color = 'blue';
-}
+                // Update jumlah like di Firestore
+                const kritikRef = doc(db, "kritik", photoId);
+                await updateDoc(kritikRef, {
+                    like: newLikeCount
+                });
+            } catch (error) {
+                console.error('Error updating like count:', error);
+            }
+        }
 // Panggil loadData() saat halaman dimuat
 window.onload = loadData;
 const audio = document.getElementById('audio');
