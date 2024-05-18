@@ -381,7 +381,7 @@ width: 100%;
        }
 .rahasia {
     position: relative;
-    bottom: 250px; /* Ubah posisi ke bagian bawah */
+    bottom: 230px; /* Ubah posisi ke bagian bawah */
     left: 19px;
     background-image: url('https://telegra.ph/file/d758345d03ef0d74ae878.jpg');
     background-size: cover;
