@@ -108,7 +108,7 @@
             </div>
         </form>
     </div>
-           <script type="module" src="other/script.js"></script>
+         <script type="module" src="other/script.js"></script>
          <script>
     function scrollToInfo() {
     var infoElement = document.getElementById('info'); // Perubahan kelas menjadi ID
@@ -145,51 +145,7 @@ content.style.display = 'block';
         formContainer.scrollIntoView({ behavior: 'smooth' });
     }
 }
-function loadData() {
-  document.querySelector('.spinner').style.display = 'block';
 
-  fetch('data.json')
-    .then(response => response.json())
-    .then(data => {
-  if (data.length === 0) {
-    console.log(true); 
-   document.querySelector('.spinner').style.display = 'none';
-    return;
-  }
-  const sortedData = data.sort((a, b) => new Date(b.Date) - new Date(a.Date));
-  const contentDiv = document.getElementById('content');
-  contentDiv.innerHTML = '';
-  sortedData.forEach(item => {
-    contentDiv.innerHTML += `
-      <div class="content-item">
-    .
-          <h2>Nama: ${item.nama}</h2>
-            <img src="${item.foto}" alt="Foto" style="width: 100%; border-radius: 10px;">
-<span id="like-value-${item.id}" style="font-size: 10px;">
-  <i class="fas fa-eye"></i> ${item.like}
-</span>
-<button onclick="increaseLike('${item.id}')" id="likeButton-${item.id}" style="color: white;">
-  <i class="fas fa-thumbs-up"></i>
-</button>
-            <p>Pesan: ${item.pesan}</p>
-            <p>
-              ${item.facebook !== "none" ? `<a href="${item.facebook}" target="_blank" class="social-link"><i class="fab fa-facebook-square social-icon"></i></a>` : `<i class="fas fa-exclamation-circle social-icon"></i>`}
-              ${item.Instagram !== "none" ? `<a href="${item.Instagram}" target="_blank" class="social-link"><i class="fab fa-instagram social-icon"></i></a>` : `<i class="fas fa-exclamation-circle social-icon"></i>`}
-              ${item.Tiktok !== "none" ? `<a href="${item.Tiktok}" target="_blank" class="social-link"><i class="fab fa-tiktok social-icon"></i></a>` : `<i class="fas fa-exclamation-circle social-icon"></i>`}
-              ${item.WhatsApp !== "none" ? `<a href="https://${item.WhatsApp}" target="_blank" class="social-link"><i class="fab fa-whatsapp social-icon"></i></a>` : `<i class="fas fa-exclamation-circle social-icon"></i>`}
-              ${item.Twitter !== "none" ? `<a href="${item.Twitter}" target="_blank" class="social-link"><i class="fab fa-twitter social-icon"></i></a>` : `<i class="fas fa-exclamation-circle social-icon"></i>`}
-            </p>
-          </div>`;
-      });
-      
-document.querySelector('.spinner').style.display = 'none';
-})
-.catch(error => {
-  console.error('Error:', error);
-  // Sembunyikan spinner jika ada error
-  document.querySelector('.spinner').style.display = 'none';
-});
-}
        </script>
   </body>
   </html>
