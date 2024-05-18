@@ -1,3 +1,7 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
 function loadData() {
   // Tampilkan spinner saat tombol ditekan
   document.querySelector('.spinner').style.display = 'block';
@@ -171,52 +175,76 @@ function generateUniqueId(length) {
     }
     return result;
 }
+const firebaseConfig = {
+    apiKey: "AIzaSyAS1AnLgCPgLflmO-bXPNs-BL0TCKGvBeQ",
+    authDomain: "poststory-194bc.firebaseapp.com",
+    projectId: "poststory-194bc",
+    storageBucket: "poststory-194bc.appspot.com",
+    messagingSenderId: "143551455491",
+    appId: "1:143551455491:web:2a96134aeabc017e018936",
+    measurementId: "G-DB9TTD2Y33"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
 
 function addHttps(url) {
-    if (!url.includes("http")) {
+    if (!url.startsWith("http")) {
         return "https://" + url;
     }
     return url;
 }
 
-function saveData(nama, pesan, fotoUrl, facebook, instagram, tiktok, whatsapp, twitter) {
-    fetch('https://api.ipify.org?format=json')
-        .then(response => response.json())
-        .then(data => {
-            var alamat = data.ip;
-            var kritikData = {
-                "id": generateUniqueId(8),
-                "nama": nama,
-                "pesan": pesan,
-                "foto": fotoUrl,
-                "facebook": facebook ? addHttps(facebook) : "None",
-                "instagram": instagram ? addHttps(instagram) : "None",
-                "tiktok": tiktok ? addHttps(tiktok) : "None",
-                "whatsapp": whatsapp ? addHttps(whatsapp) : "None",
-                "twitter": twitter ? addHttps(twitter) : "None",
-                "date": new Date(),
-                "address": alamat,
-                "like": 0 // Menambahkan properti like dengan nilai awal 0
-            };
+function formatSocialMediaUrl(username, platform) {
+    if (username && !username.includes("http")) {
+        switch(platform) {
+            case 'facebook':
+                return addHttps('www.facebook.com/' + username);
+            case 'instagram':
+                return addHttps('www.instagram.com/' + username);
+            case 'tiktok':
+                return addHttps('www.tiktok.com/@' + username);
+            case 'whatsapp':
+                return addHttps('wa.me/' + username);
+            case 'twitter':
+                return addHttps('twitter.com/' + username);
+            default:
+                return username;
+        }
+    }
+    return username;
+  }
+async function saveData(nama, pesan, fotoUrl, facebook, instagram, tiktok, whatsapp, twitter) {
+    try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        const alamat = data.ip;
 
-            var jsonData = JSON.stringify([kritikData]);
+        const kritikData = {
+            "id": generateUniqueId(8),
+            "nama": nama,
+            "pesan": pesan,
+            "foto": fotoUrl,
+            "facebook": formatSocialMediaUrl(facebook, 'facebook'),
+            "instagram": formatSocialMediaUrl(instagram, 'instagram'),
+            "tiktok": formatSocialMediaUrl(tiktok, 'tiktok'),
+            "whatsapp": formatSocialMediaUrl(whatsapp, 'whatsapp'),
+            "twitter": formatSocialMediaUrl(twitter, 'twitter'),
+            "date": new Date(),
+            "address": alamat,
+            "like": 0 // Menambahkan properti like dengan nilai awal 0
+        };
 
-            // Menyimpan data JSON ke dalam file baru
-            var blob = new Blob([jsonData], { type: "application/json" });
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'data.json';
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-
-            // Bersihkan formulir
-            document.getElementById('kritikForm').reset();
-            alertCustom('Berhasil')
-        })
-        .catch(error => console.error('Error:', error));
-}
+        await addDoc(collection(db, "kritik"), kritikData);
+        alert('Data berhasil disimpan!');
+        document.getElementById('kritikForm').reset();
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan saat menyimpan data.');
+    }
+    }
         function showSecret() {
             var overlay = document.getElementById('overlay');
             var formContainer = document.getElementById('formContainer');
