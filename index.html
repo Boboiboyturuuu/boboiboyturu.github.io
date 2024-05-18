@@ -109,11 +109,14 @@
         </form>
     </div>
          <script type="module">
-         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
 import { getFirestore, collection, addDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const db = getFirestore();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const db = getFirestore(app);
 
 // Fungsi untuk mengambil dan menampilkan data dari Firestore
 async function loadData() {
@@ -302,10 +305,7 @@ const firebaseConfig = {
     measurementId: "G-DB9TTD2Y33"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
+
 
 function addHttps(url) {
     if (!url.startsWith("http")) {
