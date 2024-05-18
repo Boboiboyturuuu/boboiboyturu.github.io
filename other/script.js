@@ -1,6 +1,61 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const db = getFirestore();
+
+// Fungsi untuk mengambil dan menampilkan data dari Firestore
+async function loadData() {
+    document.querySelector('.spinner').style.display = 'block';
+    
+    try {
+        const querySnapshot = await getDocs(collection(db, "kritik"));
+        const data = [];
+        
+        querySnapshot.forEach((doc) => {
+            data.push(doc.data());
+        });
+
+        if (data.length === 0) {
+            console.log(true);
+            document.querySelector('.spinner').style.display = 'none';
+            return;
+        }
+
+        const sortedData = data.sort((a, b) => new Date(b.date.seconds * 1000) - new Date(a.date.seconds * 1000));
+        const contentDiv = document.getElementById('content');
+        contentDiv.innerHTML = '';
+        
+        sortedData.forEach(item => {
+            contentDiv.innerHTML += `
+                <div class="content-item">
+                    <h2>Nama: ${item.nama}</h2>
+                    <img src="${item.foto}" alt="Foto" style="width: 100%; border-radius: 10px;">
+                    <span id="like-value-${item.id}" style="font-size: 10px;">
+                        <i class="fas fa-eye"></i> ${item.like}
+                    </span>
+                    <button onclick="increaseLike('${item.id}')" id="likeButton-${item.id}" style="color: white;">
+                        <i class="fas fa-thumbs-up"></i>
+                    </button>
+                    <p>Pesan: ${item.pesan}</p>
+                    <p>
+                        ${item.facebook !== "none" ? `<a href="${item.facebook}" target="_blank" class="social-link"><i class="fab fa-facebook-square social-icon"></i></a>` : `<i class="fas fa-exclamation-circle social-icon"></i>`}
+                        ${item.instagram !== "none" ? `<a href="${item.instagram}" target="_blank" class="social-link"><i class="fab fa-instagram social-icon"></i></a>` : `<i class="fas fa-exclamation-circle social-icon"></i>`}
+                        ${item.tiktok !== "none" ? `<a href="${item.tiktok}" target="_blank" class="social-link"><i class="fab fa-tiktok social-icon"></i></a>` : `<i class="fas fa-exclamation-circle social-icon"></i>`}
+                        ${item.whatsapp !== "none" ? `<a href="https://${item.whatsapp}" target="_blank" class="social-link"><i class="fab fa-whatsapp social-icon"></i></a>` : `<i class="fas fa-exclamation-circle social-icon"></i>`}
+                        ${item.twitter !== "none" ? `<a href="${item.twitter}" target="_blank" class="social-link"><i class="fab fa-twitter social-icon"></i></a>` : `<i class="fas fa-exclamation-circle social-icon"></i>`}
+                    </p>
+                </div>`;
+        });
+
+        document.querySelector('.spinner').style.display = 'none';
+    } catch (error) {
+        console.error('Error:', error);
+        document.querySelector('.spinner').style.display = 'none';
+    }
+}
+
+// Panggil fungsi loadData saat halaman dimuat
+document.addEventListener('DOMContentLoaded', loadData);
 var likeCounts = {};
 
 function increaseLike(photoId) {
@@ -182,11 +237,11 @@ async function saveData(nama, pesan, fotoUrl, facebook, instagram, tiktok, whats
         };
 
         await addDoc(collection(db, "kritik"), kritikData);
-        alert('Data berhasil disimpan!');
+        alertCostume('Data berhasil disimpan!');
         document.getElementById('kritikForm').reset();
     } catch (error) {
         console.error('Error:', error);
-        alert('Terjadi kesalahan saat menyimpan data.');
+        alertCostume('Terjadi kesalahan saat menyimpan data.');
     }
     }
 let visitorData = [];
